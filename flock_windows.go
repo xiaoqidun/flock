@@ -45,7 +45,7 @@ func (f *Flock) Lock() error {
 // 多个进程可以同时持有读锁。如果锁被其他进程以写锁方式持有，
 // 则调用会阻塞，直到可以获取锁为止。
 func (f *Flock) RLock() error {
-	file, err := os.OpenFile(f.path, os.O_CREATE|os.O_RDONLY, 0666)
+	file, err := os.OpenFile(f.path, os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
 		return err
 	}
@@ -100,7 +100,7 @@ func (f *Flock) TryLock() (bool, error) {
 // 如果成功获取锁，返回 true, nil。
 // 如果锁已被其他进程以写锁方式持有，立即返回 false, nil。
 func (f *Flock) TryRLock() (bool, error) {
-	file, err := os.OpenFile(f.path, os.O_CREATE|os.O_RDONLY, 0666)
+	file, err := os.OpenFile(f.path, os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
 		return false, err
 	}
